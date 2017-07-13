@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
     RadioGroup rgGender;
     CheckBox ckbLike;
 
+    //This is a line for GitHub updating
+
     @Override
     protected void onPause() {
         super.onPause();

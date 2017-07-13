@@ -19,31 +19,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        etName = (EditText)findViewById(R.id.editTextName);
-        etGPA = (EditText)findViewById(R.id.editTextGPA);
-        rgGender = (RadioGroup)findViewById(R.id.RadioGroupGender);
-        ckbLike = (CheckBox)findViewById(R.id.checkBoxLikeProgramming);
-
         //Step1a: Retrieve data input of the user
         String strName = etName.getText().toString();
-        String strGPA = etGPA.getText().toString();
+        float gpa = Float.parseFloat(etGPA.getText().toString());
         boolean boolLike = ckbLike.isChecked();
         int intGender = rgGender.getCheckedRadioButtonId();
 
         //Step1b: Obtain an instance of the Shared Preference
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-    //Step1c: Obtain an instance of the Shared Preference Editor for update later
-    SharedPreferences.Editor prefEdit = prefs.edit();
+        //Step1c: Obtain an instance of the Shared Preference Editor for update later
+        SharedPreferences.Editor prefEdit = prefs.edit();
 
-    //Step1d: Add the key-value pair
+        //Step1d: Add the key-value pair
         prefEdit.putString("name", strName);
-        prefEdit.putString("gpa", strGPA);
+        prefEdit.putFloat("gpa", gpa);
         prefEdit.putBoolean("like", boolLike);
         prefEdit.putInt("gender", intGender);
 
 
-    //Step1e: Call commit() method to save the changes into the Shared Preference
+        //Step1e: Call commit() method to save the changes into the Shared Preference
         prefEdit.commit();
 }
 
@@ -51,24 +46,20 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        etName = (EditText)findViewById(R.id.editTextName);
-        etGPA = (EditText)findViewById(R.id.editTextGPA);
-        rgGender = (RadioGroup)findViewById(R.id.RadioGroupGender);
-        ckbLike = (CheckBox)findViewById(R.id.checkBoxLikeProgramming);
 
         //Step2a: Obtain an instance of the Shared Preference
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         //Step2b: Retrieve the saved data with the key, name from the SharedPreferences object.
         String strName = prefs.getString("name","John");
-        String strGPA = prefs.getString("gpa", "3.0");
+        float gpa = prefs.getFloat("gpa", 0);
         boolean boolLike = prefs.getBoolean("like", false);
-        int intGender = prefs.getInt("gender", 1);
+        int intGender = prefs.getInt("gender", R.id.radioButtonGenderMale);
 
 
         //step2c: Update the UI element with the value.
         etName.setText(strName);
-        etGPA.setText(strGPA);
+        etGPA.setText(gpa+"");
         ckbLike.setChecked(boolLike);
         rgGender.check(intGender);
     }
@@ -77,5 +68,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        etName = (EditText)findViewById(R.id.editTextName);
+        etGPA = (EditText)findViewById(R.id.editTextGPA);
+        rgGender = (RadioGroup)findViewById(R.id.RadioGroupGender);
+        ckbLike = (CheckBox)findViewById(R.id.checkBoxLikeProgramming);
     }
 }
